@@ -2,7 +2,7 @@ import java.util.Random;
 
 /**
  *
- * @author elian
+ * @author Grupo1
  */
 
 public class PracticaProgramadaCS2 {
