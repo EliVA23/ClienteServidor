@@ -1,49 +1,46 @@
+package org.example;
+
 import java.util.Random;
 
-/**
- *
- * @author Grupo1
- */
-
 public class Liebre extends Thread {
-    static public int posicion;
-    static public int pista;
-    private Random random = new Random();
-    
+    private int posicion;
+    private final int pista;
+    private final Random random = new Random();
+
     public Liebre(int pista) {
         this.posicion = 1;
         this.pista = pista;
     }
-    
-    int calcularMovimientoLiebre(Random random) {
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    private int calcularMovimiento() {
         int numeroAleatorio = random.nextInt(100) + 1;
         if (numeroAleatorio <= 20) {
-            return 0; // Duerme
+            return 0; // duerme
         } else if (numeroAleatorio <= 40) {
-            return 9; // Gran salto
+            return 9; // gran salto
         } else if (numeroAleatorio <= 50) {
-            return -12; // Resbalón grande
+            return -12; // resbalon grande
         } else if (numeroAleatorio <= 80) {
-            return 1; // Pequeño salto
+            return 1; // pequeno salto
         } else {
-            return -2; // Pequeño resbalón
+            return -2; // pequeno resbalon
         }
     }
-    
+
     @Override
     public void run() {
         while (posicion < pista) {
             try {
-                Thread.sleep(1000); // Esperar 1 segundo
+                Thread.sleep(1000); // esperar 1 segundo
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            int movimiento = calcularMovimientoLiebre(random);
-            posicion = Math.max(1, posicion + movimiento);
+            posicion = Math.max(1, posicion + calcularMovimiento());
         }
-        System.out.println("¡La liebre ha ganado!");
     }
-    
-    
 }
