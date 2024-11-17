@@ -1,43 +1,42 @@
+package org.example;
+
 import java.util.Random;
 
-/**
- *
- * @author Grupo1
- */
+public class Tortuga extends Thread {
+    private int posicion;
+    private final int pista;
+    private final Random random = new Random();
 
-public class Tortuga extends Thread{
-    static public int posicion;
-    static public int pista;
-    private Random random = new Random();
-    
     public Tortuga(int pista) {
         this.posicion = 1;
         this.pista = pista;
     }
 
-    int calcularMovimientoTortuga(Random random) {
+    public int getPosicion() {
+        return posicion;
+    }
+
+    private int calcularMovimiento() {
         int numeroAleatorio = random.nextInt(100) + 1;
         if (numeroAleatorio <= 50) {
-            return 3; // Avance rápido
+            return 3; // avance rapido
         } else if (numeroAleatorio <= 70) {
-            return -6; // Resbaló
+            return -6; // resbalon
         } else {
-            return 1; // Avance lento
+            return 1; // avance lento
         }
     }
-    
+
     @Override
     public void run() {
         while (posicion < pista) {
             try {
-                Thread.sleep(1000); // Esperar 1 segundo
+                Thread.sleep(1000); // esperar 1 segundo
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            int movimiento = calcularMovimientoTortuga(random);
-            posicion = Math.max(1, posicion + movimiento);
+            posicion = Math.max(1, posicion + calcularMovimiento());
         }
-        System.out.println("¡La tortuga ha ganado!");
     }
 }
